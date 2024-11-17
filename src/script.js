@@ -13,7 +13,7 @@ fetch("./config.json").then(r => r.json()).then((configuration) => {
         let places= dataManager.getData()
         for (const key in places){
             let description="località : "+key+"\n"
-            description="numero di morti : "+places[key].n_morti+"\n"
+            description+="numero di morti : "+places[key].n_morti+"\n"
             description+="numero di feriti : "+places[key].n_feriti+"\n"
             description+="data : "+places[key].data_e_ora
             locations.addLocation(key,description).then(()=>{
@@ -90,19 +90,16 @@ fetch("./config.json").then(r => r.json()).then((configuration) => {
                 "n_feriti": labels[4],
                 "n_morti": labels[5],
             });
-            /*
-            let places= dataManager.getData()
-            for (const key in places){
-                let description="località : "+key+"\n"
-                description="numero di morti : "+places[key].n_morti+"\n"
-                description+="numero di feriti : "+places[key].n_feriti+"\n"
-                description+="data : "+places[key].data_e_ora
-                locations.addLocation(key,description).then(()=>{
-                    mapManager.addMarkers(locations.getLocations())
-                    mapManager.renderMap()
-                })
-            }
-            */
+
+            let description="località : "+labels[0]+"\n"
+            description+="numero di morti : "+labels[5]+"\n"
+            description+="numero di feriti : "+labels[4]+"\n"
+            description+="data : "+labels[2] + "|" + labels[3]
+            locations.addLocation(labels[0],description).then(()=>{
+                mapManager.addMarkers(locations.getLocations())
+                mapManager.renderMap()
+            })
+            
             dataManager.downloadData.then(() => {
                 const datas = dataManager.getData();
         
