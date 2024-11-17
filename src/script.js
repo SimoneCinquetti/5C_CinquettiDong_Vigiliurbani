@@ -5,8 +5,6 @@ fetch("./config.json").then(r => r.json()).then((configuration) => {
     locations.addLocation("Via Rovereto 14 milano").then(console.log(locations.getLocations()))
 })
 
-// Creazione della table
-
 let tableConfig = [
     ["Indirizzo", "Targhe", "Data e ora", "Numero feriti", "Numero morti"],
     ["Pompelo", "Moto", "12:35", "1", "2"],
@@ -26,3 +24,4 @@ filterButton.onclick = () => {
     table.filter(filterText.value);
     table.render();
 }
+
