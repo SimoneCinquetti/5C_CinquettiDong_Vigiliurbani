@@ -2,7 +2,7 @@ const GeolocationManager = (key) => {
     let data=[]
     let keyCache=key
     return {
-        addLocation : (location) => {
+        addLocation : (location,locationDescription) => {
             return new Promise ((resolve,reject) => {
                 try{
                     let locationFinale=location.replaceAll(" ","%20")
@@ -12,14 +12,14 @@ const GeolocationManager = (key) => {
                     fetch(url,{method: 'GET', headers: {accept: 'application/json'}})
                     .then(response => response.json())
                     .then(response => resolve(
-                        
                         data.push(
                             {
                                 name : location,
-                                lon : response[0].lon,
-                                lat : response[0].lat
+                                coords : [response[0].lat,response[0].lon],
+                                description : locationDescription
                             }
                         )
+                    
                     ))
                 } catch (exception) {
                     reject(exception)
