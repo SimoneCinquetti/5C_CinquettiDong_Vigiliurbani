@@ -75,7 +75,7 @@ fetch("./config.json").then(r => r.json()).then((configuration) => {
     });
 
     registration.onsubmit((labels) => {
-        if (labels.every(e => e != "") && !isNaN(labels[4]) && !isNaN(labels[5])) {
+        if (labels.every(e => e != "") && !isNaN(labels[4]) && !isNaN(labels[5]) && parseInt(labels[4]) >= 0 && parseInt(labels[5]) >= 0) {
             dataManager.addToData(labels[0], {
                 "targhe": labels[1].split(","),
                 "data_e_ora": labels[2] + "|" + labels[3],
