@@ -8,12 +8,20 @@ fetch("./config.json").then(r => r.json()).then((configuration) => {
     const locations = GeolocationManager(configuration.keyCacheGeo);
     const dataManager = DataBaseManager(configuration.keyCacheDataBase, "incidenti");
     const mapManager = MapManager("map");
-    locations.addLocation("Via Rovereto 14", "un bel posto").then(() => {
-        console.log(locations.getLocations())
-        mapManager.addMarkers(locations.getLocations())
-        mapManager.renderMap()
-    });
-
+    mapManager.initializeMap()
+    dataManager.downloadData.then(()=>{ /* Cliccando sul marcatore vengono mostrati il numero di morti e feriti e la data dell’incidente. */
+        let places= dataManager.getData()
+        for (const key in places){
+            let description="località : "+key+"\n"
+            description="numero di morti : "+places[key].n_morti+"\n"
+            description+="numero di feriti : "+places[key].n_feriti+"\n"
+            description+="data : "+places[key].data_e_ora
+            locations.addLocation(key,description).then(()=>{
+                mapManager.addMarkers(locations.getLocations())
+                mapManager.renderMap()
+            })
+        }
+    })
     let tableConfig = [
         ["Indirizzo", "Targhe", "Data e ora", "Numero feriti", "Numero morti"],
     ];
@@ -82,6 +90,19 @@ fetch("./config.json").then(r => r.json()).then((configuration) => {
                 "n_feriti": labels[4],
                 "n_morti": labels[5],
             });
+            /*
+            let places= dataManager.getData()
+            for (const key in places){
+                let description="località : "+key+"\n"
+                description="numero di morti : "+places[key].n_morti+"\n"
+                description+="numero di feriti : "+places[key].n_feriti+"\n"
+                description+="data : "+places[key].data_e_ora
+                locations.addLocation(key,description).then(()=>{
+                    mapManager.addMarkers(locations.getLocations())
+                    mapManager.renderMap()
+                })
+            }
+            */
             dataManager.downloadData.then(() => {
                 const datas = dataManager.getData();
         
