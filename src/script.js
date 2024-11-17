@@ -9,17 +9,27 @@ fetch("./config.json").then(r => r.json()).then((configuration) => {
     const dataManager = DataBaseManager(configuration.keyCacheDataBase, "incidenti");
     const mapManager = MapManager("map");
     mapManager.initializeMap()
+
+    let time = 500;
+
     dataManager.downloadData.then(()=>{ /* Cliccando sul marcatore vengono mostrati il numero di morti e feriti e la data dell’incidente. */
         let places= dataManager.getData()
         for (const key in places){
-            let description="località : "+key+"\n"
-            description="numero di morti : "+places[key].n_morti+"\n"
-            description+="numero di feriti : "+places[key].n_feriti+"\n"
-            description+="data : "+places[key].data_e_ora
-            locations.addLocation(key,description).then(()=>{
-                mapManager.addMarkers(locations.getLocations())
-                mapManager.renderMap()
-            })
+            let description=`
+                Località: ${key},
+                Targhe: ${places[key].targhe.join(" ")},
+                Data e ora: ${places[key].data_e_ora.split("|").join(" ")},
+                n_feriti: ${places[key].n_feriti},
+                n_morti: ${places[key].n_morti}
+            `;
+
+            setTimeout(() => {
+                locations.addLocation(key,description).then(() => {
+                    mapManager.addMarkers(locations.getLocations())
+                    mapManager.renderMap()
+                });
+            }, time);
+            time += 500;
         }
     })
     let tableConfig = [
@@ -90,19 +100,17 @@ fetch("./config.json").then(r => r.json()).then((configuration) => {
                 "n_feriti": labels[4],
                 "n_morti": labels[5],
             });
-            /*
-            let places= dataManager.getData()
-            for (const key in places){
-                let description="località : "+key+"\n"
-                description="numero di morti : "+places[key].n_morti+"\n"
-                description+="numero di feriti : "+places[key].n_feriti+"\n"
-                description+="data : "+places[key].data_e_ora
-                locations.addLocation(key,description).then(()=>{
-                    mapManager.addMarkers(locations.getLocations())
-                    mapManager.renderMap()
-                })
-            }
-            */
+            let description=`
+                Località: ${labels[0]},
+                Targhe: ${labels[1].split(",").join(" ")},
+                Data e ora: ${labels[2]} ${labels[3]},
+                n_feriti: ${labels[4]},
+                n_morti: ${labels[5]}
+            `;
+            locations.addLocation(labels[0],description).then(() => {
+                mapManager.addMarkers(locations.getLocations())
+                mapManager.renderMap()
+            });
             dataManager.downloadData.then(() => {
                 const datas = dataManager.getData();
         
