@@ -22,7 +22,7 @@ const createTable = (parentElement) => {
                 return;
             }
 
-            data = immutableData.filter(sublist => sublist[0].includes(address));
+            data = immutableData.filter(sublist => sublist[0].toLowerCase().includes(address));
             data.unshift(immutableData[0]);
         }, 
     }

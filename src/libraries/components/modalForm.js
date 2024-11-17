@@ -25,7 +25,7 @@ return {
         let modalHTML = "";
         for (let key in data) {
             if (data[key][1] == null) {
-                modalHTML += `<div>${key}\n<input class='underPadding2' id="${key}" type="${data[key][0]}"/></div>` + '\n';
+                modalHTML += `<div>${key}\n<input class='underPadding2' id="${key.split(" ")[0]}" type="${data[key][0]}"/></div>` + '\n';
             } else {
                 modalHTML += `
                     <div class='underPadding2'>
@@ -40,12 +40,12 @@ return {
             }
         }
 
-        document.querySelector("#prenotare").onclick = () => {
+        document.querySelector("#registrare").onclick = () => {
             const result = Object.keys(data).map((name) => {
-                return document.querySelector("#" + name).value;
+                return document.querySelector("#" + name.split(" ")[0]).value;
             });
 
-            Object.keys(data).forEach(e => document.querySelector("#" + e).value = "")
+            Object.keys(data).forEach(e => document.querySelector("#" + e.split(" ")[0]).value = "")
 
             callback(result);
         }
