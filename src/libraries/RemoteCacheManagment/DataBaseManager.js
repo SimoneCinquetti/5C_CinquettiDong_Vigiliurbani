@@ -36,15 +36,15 @@ const DataBaseManager = (RemoteKeyCache,RemoteDataBaseName) => {
     return {
         downloadData : getDataBase,
         resetData : () => {
-            setDataBase([])
+            setDataBase({})
         },
         getData : () => {
             return list
         },
-        addToData : (object) => {
+        addToData : (objectName,object) => {
             getDataBase.then(
                 ()=>{
-                    list.push(object)
+                    list[objectName]=object
                     setDataBase(list)
                 }
             )
@@ -53,28 +53,3 @@ const DataBaseManager = (RemoteKeyCache,RemoteDataBaseName) => {
 }
 
 export { DataBaseManager }
-
-/*
-fetch("http://ws.cipiaceinfo.it/cache/get", { 
-    method: "POST",
-    headers: {
-        "content-type": "application/json",
-        "key": keyCache
-    },
-    body: JSON.stringify({
-        key: dataBaseName
-    })
-}).then(r => r.json()).then(r=>dictionary=JSON.parse(r.result))
-
-fetch("http://ws.cipiaceinfo.it/cache/set", { 
-    method: "POST",
-    headers: {
-        "content-type": "application/json",
-        "key": keyCache
-    },
-    body: JSON.stringify({
-        key : dataBaseName,
-        value : JSON.stringify(dictionary)
-    })
-}).then(r => r.json()).then(r => {console.log(r.result)})
-*/
