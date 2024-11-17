@@ -1,7 +1,9 @@
 import { GeolocationManager } from "./libraries/MapManagment/GeolocationManager.js";
 import { createTable } from "./libraries/components/table.js";
+import { DataBaseManager } from "./libraries/RemoteCacheManagment/DataBaseManager.js";
 fetch("./config.json").then(r => r.json()).then((configuration) => {
-    const locations= GeolocationManager(configuration.keyCache)
+    const locations= GeolocationManager(configuration.keyCacheGeo)
+    const dataManager = DataBaseManager(configuration.keyCacheDataBase,"incidenti")
     locations.addLocation("Via Rovereto 14 milano").then(console.log(locations.getLocations()))
 })
 
