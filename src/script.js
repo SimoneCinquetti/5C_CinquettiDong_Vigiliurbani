@@ -94,35 +94,33 @@ fetch("./config.json").then(r => r.json()).then((configuration) => {
 
     registration.onsubmit((labels) => {
         if (labels.every(e => e != "") && !isNaN(labels[4]) && !isNaN(labels[5]) && parseInt(labels[4]) >= 0 && parseInt(labels[5]) >= 0) {
-            dataManager.addToData(labels[0], {
+            dataManager.addToData(labels[0]+",Milano", {
                 "targhe": labels[1].split(","),
                 "data_e_ora": labels[2] + "|" + labels[3],
-                "n_feriti": labels[4],
-                "n_morti": labels[5],
+                "n_feriti": labels[5],
+                "n_morti": labels[4],
             });
             let description=`
                 Località: ${labels[0]},
                 Targhe: ${labels[1].split(",").join(" ")},
                 Data e ora: ${labels[2]} ${labels[3]},
-                n_feriti: ${labels[4]},
-                n_morti: ${labels[5]}
+                n_feriti: ${labels[5]},
+                n_morti: ${labels[4]}
             `;
-            locations.addLocation(labels[0],description).then(() => {
+            locations.addLocation(labels[0]+", Milano",description).then(() => {
                 mapManager.addMarkers(locations.getLocations())
                 mapManager.renderMap()
             });
             dataManager.downloadData.then(() => {
                 const datas = dataManager.getData();
-        
-                for (let key in datas) {
-                    tableConfig.push([
-                        key, 
-                        datas[key]["targhe"].join(" "),
-                        datas[key]["data_e_ora"].split("|").join(" "),
-                        datas[key]["n_feriti"],
-                        datas[key]["n_morti"],
-                    ]);
-                }
+
+                tableConfig.push([
+                    labels[0] + ", Milano", 
+                    labels[1].split(",").join(" "),
+                    labels[2] + " " + labels[3],
+                    labels[5],
+                    labels[4],
+                ]);
                 table.build(tableConfig); 
                 table.render();
             });
