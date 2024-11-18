@@ -18,8 +18,7 @@ const GeolocationManager = (key) => {
                                 coords : [response[0].lat,response[0].lon],
                                 description : locationDescription
                             }
-                        )
-                    
+                        )    
                     ))
                 } catch (exception) {
                     reject(exception)
