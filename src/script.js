@@ -2,13 +2,19 @@ import { GeolocationManager } from "./libraries/MapManagment/GeolocationManager.
 import { createTable } from "./libraries/components/table.js";
 import { DataBaseManager } from "./libraries/RemoteCacheManagment/DataBaseManager.js";
 import { MapManager } from "./libraries/MapManagment/MapManager.js";
-import { createModalForm } from "./libraries/components/modalForm.js"
+import { createModalForm } from "./libraries/components/modalForm.js";
+
+const loginButton = document.getElementById("loginButton");
+const login = document.getElementById("login");
 
 fetch("./config.json").then(r => r.json()).then((configuration) => {
     const locations = GeolocationManager(configuration.keyCacheGeo);
     const dataManager = DataBaseManager(configuration.keyCacheDataBase, "incidenti");
     const mapManager = MapManager("map");
     mapManager.initializeMap()
+
+    loginButton.onclick = ()=>{//AGGIUNGERE RENDERE INVISIBILE IL LOGIN
+        }
 
     let time = 500;
 

@@ -8,3 +8,11 @@
 }
 
 #map { height: 500px }
+
+.invisible {
+    display: none;
+}
+
+.visible {
+    display: block;
+}
