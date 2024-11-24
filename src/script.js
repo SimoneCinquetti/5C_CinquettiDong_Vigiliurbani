@@ -7,9 +7,7 @@ import { createLogin } from "./libraries/components/login.js";
 
 fetch("./config.json").then(r => r.json()).then((configuration) => {
 
-
     const login = createLogin(configuration.keyCacheDataBase, "#name", "#password", "#loginButton", "#private", "#login");
-
     const locations = GeolocationManager(configuration.keyCacheGeo);
     const dataManager = DataBaseManager(configuration.keyCacheDataBase, "incidenti");
     const mapManager = MapManager("map");

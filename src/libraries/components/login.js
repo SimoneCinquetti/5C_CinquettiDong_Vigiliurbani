@@ -10,11 +10,12 @@ const createLogin = (token, idName, idPassword, loginButtonId, privateId, loginI
     divPrivate.classList.remove("visible");
     divPrivate.classList.add("hidden");
 
+
     let isLogged = sessionStorage.getItem("Logged") || false;
 
     const login = (username, password) => {
         return new Promise((resolve, reject) => {
-            fetch("http://ws.cipiaceinfo.it/credential/login", {
+            fetch("https://ws.cipiaceinfo.it/credential/login", {
                 method: "POST",
                 headers: {
                     "content-type": "application/json",
@@ -23,7 +24,7 @@ const createLogin = (token, idName, idPassword, loginButtonId, privateId, loginI
                 body: JSON.stringify({
                     username: username,
                     password: password
-                })
+                }),
             })
                 .then(r => r.json())
                 .then(r => {
@@ -34,7 +35,7 @@ const createLogin = (token, idName, idPassword, loginButtonId, privateId, loginI
     }
 
     loginButton.onclick = () => {
-        login(inputName.value, inputPassword.password).then((result) => {
+        login(inputName.value, inputPassword.value).then((result) => { 
             if (result) {
                 isLogged = true;
                 sessionStorage.setItem("Logged", true);
@@ -42,6 +43,8 @@ const createLogin = (token, idName, idPassword, loginButtonId, privateId, loginI
                 divLogin.classList.add("hidden");
                 divPrivate.classList.add("visible");
                 divPrivate.classList.remove("hidden");
+            } else {
+                document.querySelector("#promptlogin").innerHTML = "Credenziali errate";
             }
         });
     }
