@@ -5,11 +5,12 @@ const createLogin = (token, idName, idPassword, loginButtonId, privateId, loginI
     const divPrivate = document.querySelector(privateId);
     const divLogin = document.querySelector(loginId);
 
-    divLogin.classList.add(".visible");
-    divLogin.classList.remove(".hidden");
-    divPrivate.classList.remove(".visible");
-    divPrivate.classList.add(".hidden");
-    isLogged = sessionStorage.getItem("Logged") || false;
+    divLogin.classList.add("visible");
+    divLogin.classList.remove("hidden");
+    divPrivate.classList.remove("visible");
+    divPrivate.classList.add("hidden");
+
+    let isLogged = sessionStorage.getItem("Logged") || false;
 
     const login = (username, password) => {
         return new Promise((resolve, reject) => {
@@ -37,10 +38,10 @@ const createLogin = (token, idName, idPassword, loginButtonId, privateId, loginI
             if (result) {
                 isLogged = true;
                 sessionStorage.setItem("Logged", true);
-                divLogin.classList.remove(".visible");
-                divLogin.classList.add(".hidden");
-                divPrivate.classList.add(".visible");
-                divPrivate.classList.remove(".hidden");
+                divLogin.classList.remove("visible");
+                divLogin.classList.add("hidden");
+                divPrivate.classList.add("visible");
+                divPrivate.classList.remove("hidden");
             }
         });
     }
